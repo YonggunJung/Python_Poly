@@ -2,9 +2,11 @@ name=eng=math=topAvg=topName=None
 def readData() :
     global name, eng, math
     name = input("이름: ")
-
+    if name == '' or name == '-1':
+        return False
     eng = int(input("영어 성적: ")) 
     math = int(input("수학 성적: "))
+    # return True
 
 def getAvg(eng, math, n) :
     return (eng+math) / n
@@ -28,7 +30,8 @@ def printRecord(name, subj1, subj2, mean, level) :
 
 def processOne():
     global avg, grade
-    readData()
+    if readData() == False:
+        return False
     avg = getAvg(eng, math, 2)
     grade = getGrade(avg)
     printTitle()
@@ -52,10 +55,12 @@ i= 0
 while True:
     i += 1
     print('\n%d번째 학생 성적 처리' % i)
-    processOne()
+    flag = processOne()
+    if flag == False:
+        break
     
-    if name == '' or math < 0 or eng < 0:
-        break 
+    # if name == '' or name == '-1' or math < 0 or eng < 0:
+    #     break 
     
     if topAvg < avg :
         topAvg = avg
@@ -76,7 +81,9 @@ while True:
         botmath = math
         bmname = name
 
+if flag != False:
+    print('\n최고 평균 : %6.2f(%s)\n최저 평균 : %6.2f(%s)\n최고 영어 : %d(%s)\t최저 영어 : %d(%s)\n최고 수학 : %d(%s)\t최저 수학 : %d(%s)' \
+        % (topAvg, topName, botAvg, botName, topeng, tename, boteng, bename, topmath, tmname, botmath, bmname))
 
-print('\n최고 평균 : %6.2f(%s)\n최저 평균 : %6.2f(%s)\n최고 영어 : %d(%s)\t최저 영어 : %d(%s)\n최고 수학 : %d(%s)\t최저 수학 : %d(%s)' \
-      % (topAvg, topName, botAvg, botName, topeng, tename, boteng, bename, topmath, tmname, botmath, bmname))
+
 print('\n프로그램 종료')
